@@ -11,6 +11,9 @@ import { Provider as ShopifyAppBridgeProvider } from '@shopify/app-bridge-react'
 export function AppBridgeProvider({ children }: { children: React.ReactNode }) {
   const [config, setConfig] = useState<any>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [debugInfo, setDebugInfo] = useState<{ shop: boolean; host: boolean; apiKey: boolean } | null>(
+    null,
+  );
   const isDevelopment = import.meta.env.DEV || import.meta.env.MODE === 'development';
 
   useEffect(() => {
@@ -47,6 +50,7 @@ export function AppBridgeProvider({ children }: { children: React.ReactNode }) {
         host,
         apiKey: !!apiKey,
       });
+      setDebugInfo({ shop: !!shop, host: !!host, apiKey: !!apiKey });
       setIsInitialized(true);
       return;
     }
@@ -57,6 +61,7 @@ export function AppBridgeProvider({ children }: { children: React.ReactNode }) {
       host,
       forceRedirect: true,
     });
+    setDebugInfo({ shop: true, host: true, apiKey: true });
     setIsInitialized(true);
   }, [isDevelopment]);
 
@@ -78,10 +83,12 @@ export function AppBridgeProvider({ children }: { children: React.ReactNode }) {
         <h1>App Bridge Not Initialized</h1>
         <p>This app must be accessed through the Shopify Admin.</p>
         <p>Shop and host parameters are required.</p>
-        <p style={{ marginTop: '1rem', color: '#6d7175' }}>
-          Debug: shop={shop ? 'yes' : 'no'} host={host ? 'yes' : 'no'} apiKey=
-          {apiKey ? 'yes' : 'no'}
-        </p>
+        {debugInfo && (
+          <p style={{ marginTop: '1rem', color: '#6d7175' }}>
+            Debug: shop={debugInfo.shop ? 'yes' : 'no'} host={debugInfo.host ? 'yes' : 'no'} apiKey=
+            {debugInfo.apiKey ? 'yes' : 'no'}
+          </p>
+        )}
       </div>
     );
   }
