@@ -21,7 +21,10 @@ export function AppBridgeProvider({ children }: { children: React.ReactNode }) {
     const hostParam = searchParams.get('host');
     const shop = shopParam || window.sessionStorage.getItem('shop') || undefined;
     const host = hostParam || window.sessionStorage.getItem('host') || undefined;
-    const apiKey = import.meta.env.VITE_SHOPIFY_API_KEY || '';
+    const apiKey =
+      import.meta.env.VITE_SHOPIFY_API_KEY ||
+      import.meta.env.VITE_API_KEY ||
+      '';
 
     if (shopParam) {
       window.sessionStorage.setItem('shop', shopParam);
@@ -39,7 +42,11 @@ export function AppBridgeProvider({ children }: { children: React.ReactNode }) {
 
     // Production: shop and host are required (from OAuth callback)
     if (!shop || !host || !apiKey) {
-      console.error('[ERROR] Missing required App Bridge parameters:', { shop, host, apiKey: !!apiKey });
+      console.error('[ERROR] Missing required App Bridge parameters:', {
+        shop,
+        host,
+        apiKey: !!apiKey,
+      });
       setIsInitialized(true);
       return;
     }
@@ -71,6 +78,10 @@ export function AppBridgeProvider({ children }: { children: React.ReactNode }) {
         <h1>App Bridge Not Initialized</h1>
         <p>This app must be accessed through the Shopify Admin.</p>
         <p>Shop and host parameters are required.</p>
+        <p style={{ marginTop: '1rem', color: '#6d7175' }}>
+          Debug: shop={shop ? 'yes' : 'no'} host={host ? 'yes' : 'no'} apiKey=
+          {apiKey ? 'yes' : 'no'}
+        </p>
       </div>
     );
   }
