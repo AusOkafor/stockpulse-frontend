@@ -4,17 +4,18 @@ import { Tabs, Text, InlineStack } from '@shopify/polaris';
 export function Navigation() {
   const navigate = useNavigate();
   const location = useLocation();
+  const search = location.search || '';
 
   const tabs = [
     {
       id: 'dashboard',
       content: 'Dashboard',
-      url: '/',
+      url: `/${search}`,
     },
     {
       id: 'settings',
       content: 'Settings',
-      url: '/settings',
+      url: `/settings${search}`,
     },
   ];
 
