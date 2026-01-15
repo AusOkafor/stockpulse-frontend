@@ -12,9 +12,9 @@ import {
   BlockStack,
   EmptyState,
 } from '@shopify/polaris';
-import { AlertDiamondIcon, ViewIcon, AlertCircleIcon } from '@shopify/polaris-icons';
+import { ViewIcon } from '@shopify/polaris-icons';
 import { api } from '../api/client';
-import type { DashboardData, ProductWithDemand } from '../types';
+import type { DashboardData } from '../types';
 
 export function Dashboard() {
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ export function Dashboard() {
             borderRadius: '4px',
           }}
         />
-        <Text variant="bodyMd" fontWeight="medium">
+        <Text variant="bodyMd" as="p" fontWeight="medium">
           {product.title}
         </Text>
       </InlineStack>
@@ -71,14 +71,11 @@ export function Dashboard() {
     `$${product.revenueOpportunity.toLocaleString()}`,
     (
       <InlineStack key={`priority-${product.id}`} gap="200">
-        <Badge
-          tone={product.restockPriority === 'ASAP' ? 'critical' : 'warning'}
-          icon={product.restockPriority === 'ASAP' ? AlertDiamondIcon : AlertCircleIcon}
-        >
-          Restock {product.restockPriority === 'ASAP' ? 'ASAP' : 'Soon'}
+        <Badge tone={product.restockPriority === 'ASAP' ? 'critical' : 'warning'}>
+          {`Restock ${product.restockPriority === 'ASAP' ? 'ASAP' : 'Soon'}`}
         </Badge>
         <Button
-          plain
+          variant="plain"
           icon={ViewIcon}
           onClick={() => navigate(`/waitlist/${product.id}`)}
         >
@@ -143,7 +140,7 @@ export function Dashboard() {
                     <Text variant="heading2xl" as="p">
                       {data.metrics.productsWithDemand}
                     </Text>
-                    <Text variant="bodyMd" tone="subdued">
+                    <Text variant="bodyMd" tone="subdued" as="p">
                       Out-of-stock products customers want right now.
                     </Text>
                   </BlockStack>
@@ -157,7 +154,7 @@ export function Dashboard() {
                     <Text variant="heading2xl" as="p">
                       {data.metrics.buyersWaiting}
                     </Text>
-                    <Text variant="bodyMd" tone="subdued">
+                    <Text variant="bodyMd" tone="subdued" as="p">
                       Customers ready to purchase once restocked.
                     </Text>
                   </BlockStack>
@@ -171,10 +168,10 @@ export function Dashboard() {
                     <Text variant="heading2xl" as="p">
                       ${data.metrics.revenueRecovered.toLocaleString()}
                     </Text>
-                    <Text variant="bodyMd" tone="subdued">
+                    <Text variant="bodyMd" tone="subdued" as="p">
                       Confirmed sales from restock alerts
                     </Text>
-                    <Text variant="bodySm" tone="subdued">
+                    <Text variant="bodySm" tone="subdued" as="p">
                       From notified waitlists
                     </Text>
                   </BlockStack>

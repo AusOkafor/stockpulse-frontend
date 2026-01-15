@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { AppBridgeProvider as ShopifyAppBridgeProvider } from '@shopify/app-bridge-react';
+import { Provider as ShopifyAppBridgeProvider } from '@shopify/app-bridge-react';
 
 /**
  * App Bridge Provider

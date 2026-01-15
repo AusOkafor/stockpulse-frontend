@@ -15,7 +15,6 @@ import {
   Frame,
   Banner,
 } from '@shopify/polaris';
-import { ArrowLeftIcon } from '@shopify/polaris-icons';
 import { api } from '../api/client';
 
 interface WaitlistItem {
@@ -118,6 +117,7 @@ export function WaitlistPage() {
       <Page title="Waitlist">
         <EmptyState
           heading="Waitlist not found"
+          image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
           action={{
             content: 'Back to Dashboard',
             onAction: () => navigate('/'),
@@ -161,7 +161,7 @@ export function WaitlistPage() {
     item.status === 'PENDING' ? (
       <Button
         key={`notify-${item.id}`}
-        size="small"
+        size="slim"
         loading={notifyingIds.has(item.id)}
         onClick={() => handleNotify(item.id)}
         disabled={
@@ -194,7 +194,6 @@ export function WaitlistPage() {
         backAction={{
           content: 'Dashboard',
           onAction: () => navigate('/'),
-          icon: ArrowLeftIcon,
         }}
       >
         <Layout>
@@ -210,7 +209,7 @@ export function WaitlistPage() {
                   <Text variant="heading2xl" as="p">
                     {data.summary.totalWaiting}
                   </Text>
-                  <Text variant="bodyMd" tone="subdued">
+                  <Text variant="bodyMd" tone="subdued" as="p">
                     Customers waiting to be notified
                   </Text>
                 </BlockStack>
@@ -224,7 +223,7 @@ export function WaitlistPage() {
                   <Text variant="heading2xl" as="p">
                     {data.summary.totalNotified}
                   </Text>
-                  <Text variant="bodyMd" tone="subdued">
+                  <Text variant="bodyMd" tone="subdued" as="p">
                     Customers who received alerts
                   </Text>
                 </BlockStack>
@@ -238,7 +237,7 @@ export function WaitlistPage() {
                   <Text variant="heading2xl" as="p">
                     ${data.summary.totalRecoveredRevenue.toLocaleString()}
                   </Text>
-                  <Text variant="bodyMd" tone="subdued">
+                  <Text variant="bodyMd" tone="subdued" as="p">
                     From converted customers
                   </Text>
                 </BlockStack>
