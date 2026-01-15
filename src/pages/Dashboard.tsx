@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   Page,
   Layout,
@@ -18,6 +18,8 @@ import type { DashboardData } from '../types';
 
 export function Dashboard() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const search = location.search || '';
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -77,7 +79,7 @@ export function Dashboard() {
         <Button
           variant="plain"
           icon={ViewIcon}
-          onClick={() => navigate(`/waitlist/${product.id}`)}
+          onClick={() => navigate(`/waitlist/${product.id}${search}`)}
         >
           View waitlist
         </Button>

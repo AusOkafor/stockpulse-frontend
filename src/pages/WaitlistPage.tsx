@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import {
   Page,
   Layout,
@@ -50,6 +50,8 @@ interface PlanData {
 export function WaitlistPage() {
   const { productId } = useParams<{ productId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
+  const search = location.search || '';
   const [data, setData] = useState<WaitlistData | null>(null);
   const [plan, setPlan] = useState<PlanData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -120,7 +122,7 @@ export function WaitlistPage() {
           image="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png"
           action={{
             content: 'Back to Dashboard',
-            onAction: () => navigate('/'),
+            onAction: () => navigate(`/${search}`),
           }}
         >
           <Text variant="bodyMd" as="p">
@@ -193,7 +195,7 @@ export function WaitlistPage() {
         subtitle="Customers waiting for this product"
         backAction={{
           content: 'Dashboard',
-          onAction: () => navigate('/'),
+          onAction: () => navigate(`/${search}`),
         }}
       >
         <Layout>

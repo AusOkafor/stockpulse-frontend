@@ -17,9 +17,18 @@ export function AppBridgeProvider({ children }: { children: React.ReactNode }) {
     // Initialize App Bridge config from query params
     // shop and host come from OAuth callback redirect
     const searchParams = new URLSearchParams(window.location.search);
-    const shop = searchParams.get('shop');
-    const host = searchParams.get('host');
+    const shopParam = searchParams.get('shop');
+    const hostParam = searchParams.get('host');
+    const shop = shopParam || window.sessionStorage.getItem('shop') || undefined;
+    const host = hostParam || window.sessionStorage.getItem('host') || undefined;
     const apiKey = import.meta.env.VITE_SHOPIFY_API_KEY || '';
+
+    if (shopParam) {
+      window.sessionStorage.setItem('shop', shopParam);
+    }
+    if (hostParam) {
+      window.sessionStorage.setItem('host', hostParam);
+    }
     
     // In development, allow bypass
     if (isDevelopment && !shop && !host) {
